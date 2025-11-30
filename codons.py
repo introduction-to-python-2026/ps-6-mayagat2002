@@ -1,22 +1,24 @@
 def create_codon_dict(file_path):
     codon_dict = {}
 
-    with open(file_path, "r") as f:
+    with open(file_path, 'r') as f:
         for line in f:
             line = line.strip()
 
-            # Skip empty lines or comment lines
+            # דילוג על שורות ריקות או הערות
             if not line or line.startswith("#"):
                 continue
 
+            # פיצול לשדות
             parts = line.split()
 
-            # Expect at least 2 parts: codon and amino acid
-            codon = parts[0]
-            amino_acid = " ".join(parts[1:])  # handles multi-word amino acids
+            # נוודא שיש לפחות קודון ואמין-אסיד
+            if len(parts) < 2:
+                continue
+
+            codon = parts[0].upper()
+            amino_acid = parts[1]
 
             codon_dict[codon] = amino_acid
 
     return codon_dict
-
-
